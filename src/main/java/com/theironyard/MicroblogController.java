@@ -37,14 +37,14 @@ public class MicroblogController {
         return "redirect:/";
     }
     @RequestMapping ("/delete-message")
-    public String deletemessage ( HttpServletRequest request , Integer id){
+    public String deletemessage (Integer id){
         messagelist.remove(id - 1);
         int messagecount = 1;
         for (Message message : messagelist){
             message.id = messagecount;
-            id++;
+            messagecount++;
         }
-        return "redired:/";
+        return "redirect:/";
 
     }
 }

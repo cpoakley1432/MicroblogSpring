@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Microblog</title>
 </head>
 <body>
 {{^username}}
@@ -14,17 +14,19 @@
 
 {{#username}}
 <form action="enter-message" method="post">
-        <input type="text" placeholder="Enter your message" name="message"/>
-        <button type="submit">Submit</button>
+    <input type="text" placeholder="Enter your message" name="message"/>
+    <button type="submit">Submit</button>
 </form>
-{{/username}}
-
+<br>
+Messages by {{.}}:<br>
 {{#message}}
-Messages by {{username}}:<br>
-{{id}}. {{text}}<form action="delete-message" method="post">
-    <input type="number" placeholder="Message id" name="messageid"/>
+{{id}}. {{text}}
+
+<form action="delete-message" method="post" style="display:inline">
+    <input type="hidden" value={{id}} name="id"/>
     <button type="submit">Delete</button>
-    {{/message}}
 </form>
+{{/message}}
+{{/username}}
 </body>
 </html>
