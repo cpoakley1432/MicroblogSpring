@@ -21,7 +21,10 @@
 
 {{#message}}
 Messages by {{username}}:<br>
-{{id}}. {{text}}
-{{/message}}
+{{id}}. {{text}}<form action="delete-message" method="post">
+    <input type="number" placeholder="Message id" name="messageid"/>
+    <button type="submit">Delete</button>
+    {{/message}}
+</form>
 </body>
 </html>

@@ -36,4 +36,15 @@ public class MicroblogController {
         messagelist.add(messages);
         return "redirect:/";
     }
+    @RequestMapping ("/delete-message")
+    public String deletemessage ( HttpServletRequest request , Integer id){
+        messagelist.remove(id - 1);
+        int messagecount = 1;
+        for (Message message : messagelist){
+            message.id = messagecount;
+            id++;
+        }
+        return "redired:/";
+
+    }
 }
