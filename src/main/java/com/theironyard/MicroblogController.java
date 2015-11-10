@@ -1,5 +1,6 @@
 package com.theironyard;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,14 +14,16 @@ import java.util.ArrayList;
  */
 @Controller
 public class MicroblogController {
-    ArrayList<Message> messagelist = new ArrayList();
+    @Autowired
+    MessageRepository messagelist;
+    //ArrayList<Message> messagelist = new ArrayList();
 
     @RequestMapping ("/")
     public String home (Model model, HttpServletRequest request){
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("username");
         model.addAttribute("username" , username);
-        model.addAttribute("message" , messagelist );
+        model.addAttribute("message" , messagelist.findAll() );
         return "home";
     }
 
@@ -31,20 +34,30 @@ public class MicroblogController {
         return "redirect:/";
     }
     @RequestMapping ("/enter-message")
-    public String message (String message){
-        Message messages = new Message(messagelist.size()+1, message);
-        messagelist.add(messages);
+    public String message (String text){
+        /*Message messages = new Message(messagelist.size()+1, message);
+        messagelist.add(messages);*/
+        Message m = new Message();
+        m.text = text;
+        messagelist.save(m);
         return "redirect:/";
     }
     @RequestMapping ("/delete-message")
     public String deletemessage (Integer id){
-        messagelist.remove(id - 1);
-        int messagecount = 1;
+        messagelist.delete(id);
+        /*int messagecount = 1;
         for (Message message : messagelist){
             message.id = messagecount;
             messagecount++;
-        }
+        }*/
         return "redirect:/";
+    }
 
+    @RequestMapping ("/update-message")
+    public String updateMessage (Integer id , String text){
+        Message m = messagelist.findOne(id);
+        m.text = text;
+        messagelist.save(m);
+        return "redirect:/";
     }
 }

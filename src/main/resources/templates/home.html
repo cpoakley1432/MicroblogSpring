@@ -14,17 +14,22 @@
 
 {{#username}}
 <form action="enter-message" method="post">
-    <input type="text" placeholder="Enter your message" name="message"/>
+    <input type="text" placeholder="Enter your message" name="text"/>
     <button type="submit">Submit</button>
 </form>
 <br>
 Messages by {{.}}:<br>
-{{#message}}
+{{#message}}<br>
 {{id}}. {{text}}
 
 <form action="delete-message" method="post" style="display:inline">
     <input type="hidden" value={{id}} name="id"/>
     <button type="submit">Delete</button>
+</form><br>
+<form action="update-message" method="post">
+    <input type="text" placeholder="Update your message" name="text">
+    <input type="hidden" value={{id}} name="id"/>
+    <button type="submit">Update</button>
 </form>
 {{/message}}
 {{/username}}
